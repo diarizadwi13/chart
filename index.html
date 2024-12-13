@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        canvas {
+            max-width: 600px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="salesChart"></canvas>
+
+<script>
+    // Sample data
+    const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const salesData = [50000000, 7000000, 800000000, 6000000, 9000000, 1100000000, 1200000, 130000000, 1400000, 1500000, 1600000000, 100000000];
+
+    // Create the chart
+    const ctx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(ctx, {
+        type: 'line', // Change to 'bar' for a bar chart
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Sales ($)',
+                data: salesData,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4 // Smooth line
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Sales ($)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Months'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return `Sales: $${tooltipItem.raw}`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
